@@ -15,9 +15,18 @@ import com.google.common.primitives.Doubles;
 import weka.core.Instances;
 
 public class Cluster {
-	private Instances instancesCLA;
+	private Double[] k;
 	
-	public Instances loadArff(String path){//instance ������ ����
+	public Double[] getK() {
+		return k;
+	}
+
+	public Double getKElement(int index) {
+		return k[index];
+	}
+	
+	
+	public Instances loadArff(String path){
 		Instances instances=null;
 		BufferedReader reader;
 		try {
@@ -48,63 +57,25 @@ public class Cluster {
 		return cutoffForHigherValuesOfAttribute;
 	}
 	
-	public static double[] getDoublePrimitive(ArrayList<Double> values) {
-		return Doubles.toArray(values);
-	}
 	
-	static public double getPercentile(ArrayList<Double> values, double percentile) {
-		return StatUtils.percentile(getDoublePrimitive(values), percentile);
-	}
+	public void clustering(Instances instances, double percentileCutoff) {
 	
-	static public double getMedian(ArrayList<Double> values) {
-		return getPercentile(values, 50);
-	}
-	
-	static public String getNegLabel(Instances instances, String positiveLabel) {
-		if (instances.classAttribute().numValues() == 2) {
-			int posIndex = instances.classAttribute().indexOfValue(positiveLabel);
-			if (posIndex == 0)
-				return instances.classAttribute().value(1);
-			else
-				return instances.classAttribute().value(0);
-		} else {
-			System.err.println("Class labels must be binary");
-			System.exit(0);
-		}
-		return null;
-	}
-	
-	public Instances clustering(Instances instances, double percentileCutoff, String positiveLabel) {
-	
-		instancesCLA = new Instances(instances);
-		double[] higherValue  = getHigherValueCutoffs(instances, percentileCutoff);
-		Double[] k = new Double[instances.numInstances()];
+		double[] higherValue  = getHigherValueCutoffs(instances, percentileCutoff); //assign higervalues of instances
+		k = new Double[instances.numInstances()]; //create array with size of number of instances
 		
-		for(int instIdx = 0; instIdx < instances.numInstances(); instIdx++) {
+		for(int instIdx = 0; instIdx < instances.numInstances(); instIdx++) {//loop number of instances times
 			k[instIdx] = 0.0;
 			
-			for(int attIdx = 0; attIdx < instances.numAttributes(); attIdx++) {
+			for(int attIdx = 0; attIdx < instances.numAttributes(); attIdx++) {//loop number of attributes times 
 				if(attIdx == instances.classIndex())
 					continue;
 				
-				if(instances.get(instIdx).value(attIdx) > higherValue[attIdx])
-					k[instIdx]++;
+				if(instances.get(instIdx).value(attIdx) > higherValue[attIdx])//if the value is higher than higherValue,  
+					k[instIdx]++; // k[] is assigned
 				
 			}
 		}
-		
-		double cutoff = getMedian(new ArrayList<Double>(new HashSet<Double>(Arrays.asList(k))));
-		
-		for(int instIdx = 0; instIdx < instances.numInstances(); instIdx++) {
-			if(k[instIdx] > cutoff)
-				instancesCLA.instance(instIdx).setClassValue(positiveLabel);
-			else
-				instancesCLA.instance(instIdx).setClassValue(getNegLabel(instancesCLA, positiveLabel));
-		}
-		
-		return instancesCLA;
 	}
-	
 
 	
 }
