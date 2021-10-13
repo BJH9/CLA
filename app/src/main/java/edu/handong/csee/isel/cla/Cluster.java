@@ -60,7 +60,7 @@ public class Cluster {
 	
 	public void clustering(Instances instances, double percentileCutoff) {
 	
-		double[] higherValue  = getHigherValueCutoffs(instances, percentileCutoff); //assign higervalues of instances
+		double[] higherValue = getHigherValueCutoffs(instances, percentileCutoff); //assign higervalues of instances
 		k = new Double[instances.numInstances()]; //create array with size of number of instances
 		
 		for(int instIdx = 0; instIdx < instances.numInstances(); instIdx++) {//loop number of instances times

@@ -3,16 +3,15 @@ package edu.handong.csee.isel.cla;
 import weka.core.Instances;
 
 public class Main {
-	private Instances instancesCL;
+	private Instances instancesCLA;
 	public static void main(String[] args) {
 		new Main().runner(args);
 	}
 	
 	void runner(String[] args) {
-		Cluster cluster = new Cluster();
-		Labeler labeler = new Labeler();
+		CLA cla = new CLA();
 		
-		System.out.println(cluster.loadArff(args[0]));
+		System.out.println(Util.loadArff(args[0]));
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
@@ -20,8 +19,9 @@ public class Main {
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
-		instancesCL = cluster.loadArff(args[0]);
-		System.out.println(labeler.label(instancesCL, 50.0, "FALSE"));
+		instancesCLA = Util.loadArff(args[0]);
+		cla.clustering(instancesCLA, 50.0);
+		System.out.println(cla.label(instancesCLA, 50.0, "FALSE"));
 		
 	}
 	
