@@ -66,7 +66,7 @@ public class CLA {
 		return cutoffForHigherValuesOfAttribute;
 	}
 
-	public void clustering(Instances instances, double percentileCutoff) {
+	public void doClustering(Instances instances, double percentileCutoff) {
 
 		double[] higherValue = getHigherValueCutoffs(instances, percentileCutoff); // assign higervalues of instances
 		k = new Double[instances.numInstances()]; // create array with size of number of instances

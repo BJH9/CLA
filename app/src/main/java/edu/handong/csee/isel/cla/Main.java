@@ -20,7 +20,7 @@ public class Main {
 		System.out.println("");
 		System.out.println("");
 		instancesCLA = Util.loadArff(args[0]);
-		cla.clustering(instancesCLA, 50.0);
+		cla.doClustering(instancesCLA, 50.0);
 		System.out.println(cla.labelOnInstances(instancesCLA, 50.0, "FALSE"));
 		
 	}
