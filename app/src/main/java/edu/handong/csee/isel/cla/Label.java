@@ -10,7 +10,7 @@ import com.google.common.primitives.Doubles;
 
 import weka.core.Instances;
 
-public class Labeler {
+public class Label {
 	private Instances instancesCLA;
 	private double cutoff;
 	

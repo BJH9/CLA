@@ -86,7 +86,7 @@ public class CLA {
 		}
 	}
 
-	public Instances label(Instances instances, double percentileCutoff, String positiveLabel) {
+	public Instances labelOnInstances(Instances instances, double percentileCutoff, String positiveLabel) {
 		
 		instancesCLA = new Instances(instances); //assign instances
 		cutoff = getMedian(new ArrayList<Double>(new HashSet<Double>(Arrays.asList(getK()))));// cutoff assigned median
